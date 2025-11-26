@@ -6,7 +6,7 @@ def main():
     categoria_dao = CategoriaDAO()
     produto_dao = ProdutoDAO()
 
-    # 1) Criar 2 categorias
+    #categorias
     cat1 = Categoria(nome="Suplementos")
     cat2 = Categoria(nome="Roupas")
     cat1 = categoria_dao.create(cat1)
@@ -16,8 +16,7 @@ def main():
     print(cat2)
     print("-" * 40)
 
-    # 2) Criar 3 produtos, atribuindo cada um a uma categoria
-    # Garantimos criação sequencial para ficarem com ids previsíveis (1,2,3)
+    #produtos
     p1 = Produto(nome="Whey Protein", valor=199.90, categoria_id=cat1.id, associacao_tipo="belongs_to")
     p2 = Produto(nome="Camiseta DryFit", valor=79.90, categoria_id=cat2.id, associacao_tipo="belongs_to")
     p3 = Produto(nome="Creatina", valor=89.90, categoria_id=cat1.id, associacao_tipo="belongs_to")
@@ -32,7 +31,7 @@ def main():
     print(p3)
     print("-" * 40)
 
-    # 3) Alterar o valor do produto com id=3
+    #alteracao valor do produto
     updated = produto_dao.update(3, {"valor": 99.90})
     if updated:
         print("Produto id=3 atualizado:")
@@ -41,33 +40,32 @@ def main():
         print("Produto id=3 não encontrado para atualização.")
     print("-" * 40)
 
-    # 4) Excluir o produto com id=2
+    #excluir produto
     deleted = produto_dao.delete(2)
     print(f"Produto id=2 deletion status: {'sucesso' if deleted else 'não encontrado'}")
     print("-" * 40)
 
-    # 5) Listar todas as categorias
+    #lista das categorias
     categorias = categoria_dao.list_all()
     print("Todas as categorias:")
     for c in categorias:
         print(c)
     print("-" * 40)
 
-    # 6) Listar todos os produtos restantes
+    #lista dos produtos
     produtos = produto_dao.list_all()
     print("Produtos restantes:")
     for p in produtos:
         print(p)
     print("-" * 40)
 
-    # 7) Exibir a categoria com id=1
+    #printar categoria
     cat = categoria_dao.get_by_id(1)
     if cat:
         print("Categoria id=1:")
         print(cat)
         print("Produtos relacionados a essa categoria (se carregados):")
-        # Para mostrar os produtos relacionados, buscar manualmente os produtos com categoria_id == cat.id
-        # (relacionamento lazy load funcionará se se usar a mesma sessão; aqui vamos apenas listar via DAO)
+        
         produtos_relacionados = [p for p in produtos if p.categoria_id == cat.id]
         for pr in produtos_relacionados:
             print("  -", pr)
