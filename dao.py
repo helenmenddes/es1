@@ -35,7 +35,6 @@ class DAO(ABC, Generic[T]):
     def delete(self, id: int) -> bool:
         ...
 
-# Implementação ProdutoDAO
 class ProdutoDAO(DAO[Produto]):
     def __init__(self):
         super().__init__(Produto)
@@ -79,7 +78,6 @@ class ProdutoDAO(DAO[Produto]):
             session.commit()
             return True
 
-# Implementação CategoriaDAO
 class CategoriaDAO(DAO[Categoria]):
     def __init__(self):
         super().__init__(Categoria)
